@@ -57,3 +57,13 @@ services:
     restart: always
     environment:
       spring.profiles.active: local
+  02-consumer:
+    build: ../02-consumer
+    restart: always
+    environment:
+      spring.profiles.active: local
+  datagenerator:
+    build: ../datagenerator
+    restart: always
+    environment:
+      spring.profiles.active: local
