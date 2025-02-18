@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "ArticleChange",
+  "namespace": "com.example.avro",
+  "fields": [
+    { "name": "articleId", "type": "string" },
+    { "name": "timestamp", "type": "string" },
+    { "name": "changeType", "type": { "type": "enum", "name": "ChangeType", "symbols": ["CREATED", "UPDATED", "DELETED"] }},
+    { "name": "name", "type": "string" },
+    { "name": "category", "type": "string" },
+    { "name": "price", "type": "double" },
+    { "name": "stock", "type": "int" },
+    { "name": "description", "type": ["null", "string"], "default": null }
+  ]
+}

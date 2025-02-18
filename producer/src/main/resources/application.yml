@@ -1,0 +1,14 @@
+spring:
+  application.name: producer
+  kafka:
+    bootstrap-servers: localhost:9092
+    client-id: ${spring.application.name}
+    properties:
+      schema.registry.url: "http://localhost:8081"
+      specific.avro.reader: true
+    consumer:
+      group-id: group_id
+      auto-offset-reset: earliest
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.thinkport.producer.model.User"

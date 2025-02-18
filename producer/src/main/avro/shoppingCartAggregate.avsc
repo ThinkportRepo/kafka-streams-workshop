@@ -1,0 +1,33 @@
+{
+  "type": "record",
+  "name": "ShoppingCartAggregate",
+  "namespace": "digital.thinkport.avro",
+  "fields": [
+    { "name": "cartID", "type": "string" },
+    { "name": "userID", "type": "string" },
+    {
+      "name": "shoppingCarts",
+      "type": ["null", {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "ShoppingCart",
+          "fields": [
+            { "name": "cartID", "type": "string" },
+            { "name": "userID", "type": "string" },
+            { "name": "articleID", "type": "string" },
+            {
+              "name": "changeType",
+              "type": {
+                "type": "enum",
+                "name": "CartChangeType",
+                "symbols": ["ADDED", "REMOVED"]
+              }
+            }
+          ]
+        }
+      }],
+      "default": null
+    }
+  ]
+}
