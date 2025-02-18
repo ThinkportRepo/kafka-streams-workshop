@@ -12,3 +12,6 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "com.thinkport.producer.model.User"
+    streams:
+        properties:
+          default.key.serde: "org.apache.kafka.common.serialization.Serdes$StringSerde"

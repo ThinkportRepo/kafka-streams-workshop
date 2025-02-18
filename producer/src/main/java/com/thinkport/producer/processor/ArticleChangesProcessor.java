@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ArticleChangesProcessor {
 
-    private final KafkaTemplate<String, ArticleChange> template;
+    //private final KafkaTemplate<String, ArticleChange> template;
     private final String ERROR_TOPIC = "";
     private final String TOPIC = "";
 

@@ -1,10 +1,9 @@
 {
   "type": "record",
-  "name": "ShoppingCart",
+  "name": "CartItem",
   "namespace": "digital.thinkport.avro",
   "fields": [
     { "name": "cartID", "type": "string" },
-    { "name": "userID", "type": "string" },
     { "name": "articleID", "type": "string" },
     {
       "name": "changeType",

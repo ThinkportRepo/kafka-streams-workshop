@@ -4,8 +4,9 @@ import com.example.avro.ArticleChange;
 import com.thinkport.producer.model.ClickJson;
 import com.thinkport.producer.model.User;
 import com.thinkport.producer.resource.ShoppingCartAggregateResource;
+import digital.thinkport.avro.Article;
+import digital.thinkport.avro.CartItem;
 import digital.thinkport.avro.OrderPlaced;
-import digital.thinkport.avro.ShoppingCart;
 import digital.thinkport.avro.ShoppingCartAggregate;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -82,13 +83,18 @@ public class ProducerConfiguration {
     }
 
     @Bean
-    public KafkaTemplate<String, ShoppingCart> kafkaTemplateShoppingCart() {
+    public KafkaTemplate<String, CartItem> kafkaTemplateShoppingCart() {
         return new KafkaTemplate<>(avroProducerFactory());
     }
 
 
     @Bean
     public KafkaTemplate<String, OrderPlaced> kafkaTemplateOrderPlaced() {
+        return new KafkaTemplate<>(avroProducerFactory());
+    }
+
+    @Bean
+    public KafkaTemplate<String, Article> kafkaTemplateArticle() {
         return new KafkaTemplate<>(avroProducerFactory());
     }
 
