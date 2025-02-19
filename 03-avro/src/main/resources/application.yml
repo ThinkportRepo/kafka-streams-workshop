@@ -1,8 +1,14 @@
 spring:
-  application.name: 02consumer
+  application.name: 03avro
   kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
     bootstrap-servers: localhost:9092
     client-id: ${spring.application.name}
+    properties:
+      schema.registry.url: "http://localhost:8081"
+      specific.avro.reader: true
     consumer:
       group-id: ${spring.application.name}
       auto-offset-reset: earliest
@@ -14,3 +20,4 @@ spring:
         spring.json.trusted.packages: "*"
 kafka-topics:
   clicks-in: shop.clicks.raw
+  clicks-out: shop.clicks.avro

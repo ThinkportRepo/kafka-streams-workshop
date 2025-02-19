@@ -30,8 +30,6 @@ public class StatelessTopoplogy {
 
     @Bean
     public KStream<String, ClickJson> storeStream(StreamsBuilder kStreamBuilder) {
-        Properties properties = new Properties();
-        properties.put("schema.registry.url",schemaRegistryUrl);
         KStream<String,ClickJson> stream = kStreamBuilder.stream(clicksTopicIn, Consumed.with(Serdes.String(), new JsonSerde<>(ClickJson.class)));
         stream.peek((k,v)->LOG.info("Key: " + k + ", Value: " + v ))
                 .mapValues(clickJson-> {
@@ -47,7 +45,13 @@ public class StatelessTopoplogy {
                             .setRequest(clickJson.getRequest())
                             .setUserAgent(clickJson.getUserAgent())
                             .build();
-                }).to("clicksTopicOut", Produced.with(Serdes.String(), CustomSerdes.getClickSerde(properties)));
+                }).to(clicksTopicOut, Produced.with(Serdes.String(), CustomSerdes.getClickSerde(getSchemaProperties())));
          return stream;
+    }
+
+    private Properties getSchemaProperties(){
+        Properties properties = new Properties();
+        properties.put("schema.registry.url",schemaRegistryUrl);
+        return  properties;
     }
 }
