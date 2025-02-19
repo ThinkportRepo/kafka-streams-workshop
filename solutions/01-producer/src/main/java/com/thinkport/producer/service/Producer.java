@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import net.datafaker.Faker;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.header.Header;
@@ -17,17 +18,21 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
 @Slf4j
 public class Producer {
+  public Producer(KafkaTemplate<String, String> template){
+    this.template = template;
+  }
+  @Value("${spring.kafka.bootstrap-servers}")
+  private String bootstrapServer;
+
   private static final String TOPIC = "my-first-topic";
   private final KafkaTemplate<String, String> template;
   private final Faker faker = new Faker();
 
   @Scheduled(fixedRate = 10000)
-
   public void sendPlainJava() {
-    String bootstrapServers = "localhost:9092";
+    String bootstrapServers = bootstrapServer;
 
     // create Producer properties
     Properties properties = new Properties();
