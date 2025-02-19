@@ -1,0 +1,14 @@
+{
+  "type": "record",
+  "name": "MostExpensiveCartItem",
+  "fields": [
+    {
+      "name": "articleID",
+      "type": "string"
+    },
+    {
+      "name": "price",
+      "type": "double"
+    }
+  ]
+}

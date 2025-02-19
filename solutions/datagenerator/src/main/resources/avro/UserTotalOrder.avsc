@@ -1,0 +1,20 @@
+{
+  "type": "record",
+  "name": "UserTotalOrder",
+  "namespace": "digital.thinkport.avro",
+  "fields": [
+    { "name": "userID", "type": "string" },
+    { "name": "orderTotal", "type": "double" },
+    {
+      "name": "mostExpensiveCartItem",
+      "type": {
+        "type": "record",
+        "name": "MostExpensiveCartItem",
+        "fields": [
+          { "name": "articleID", "type": "string" },
+          { "name": "price", "type": "double" }
+        ]
+      }
+    }
+  ]
+}
