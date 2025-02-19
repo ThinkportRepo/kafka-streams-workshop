@@ -9,6 +9,7 @@
    mvn clean install -f ./03-avro/pom.xml
    mvn clean install -f ./04-stateless-streams/pom.xml
    mvn clean install -f ./05-stateful-streams-aggregate/pom.xml
+   mvn clean install -f ./06-stateful-streams-window/pom.xml
    ```
 2. **Start the services**:
    Use Docker Compose to start the application and its dependencies:

@@ -1,6 +1,7 @@
 package com.thinkport.streams.config;
 
 import digital.thinkport.avro.ClickAvro;
+import digital.thinkport.avro.User;
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 import org.apache.avro.specific.SpecificRecord;
 
@@ -10,6 +11,10 @@ import java.util.Properties;
 
 public class CustomSerdes {
     public static SpecificAvroSerde<ClickAvro> getClickSerde(Properties properties) {
+        return getGenericSerde(properties);
+    }
+
+    public static SpecificAvroSerde<User> getUserSerde(Properties properties) {
         return getGenericSerde(properties);
     }
     private static <T extends SpecificRecord> SpecificAvroSerde<T> getGenericSerde(Properties properties){

@@ -1,0 +1,23 @@
+{
+  "type": "record",
+  "name": "User",
+  "namespace": "digital.thinkport.avro",
+  "fields": [
+    { "name": "ID", "type": "string" },
+    { "name": "name", "type": "string" },
+    { "name": "mail", "type": "string"},
+    {
+      "name": "address",
+      "type": {
+        "type": "record",
+        "name": "Address",
+        "fields": [
+          { "name": "street", "type": "string" },
+          { "name": "houseNr", "type": "string" },
+          { "name": "zipCode", "type": "string" }
+        ]
+      }
+    },
+    { "name": "phone", "type": "string" }
+  ]
+}

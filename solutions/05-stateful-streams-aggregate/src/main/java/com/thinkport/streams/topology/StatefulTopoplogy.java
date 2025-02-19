@@ -32,7 +32,7 @@ public class StatefulTopoplogy {
   private String articlesTopicIn;
 
   @Value("${kafka-topics.shop-cart-out}")
-  private String clicksTopicOut;
+  private String shopCartOut;
 
   @Bean
   public KStream<String, CartItem> cartItemStream(StreamsBuilder kStreamBuilder) {
@@ -92,6 +92,7 @@ public class StatefulTopoplogy {
         aggregate.setCartPrice(aggregate.getCartPrice() - value.getPrice());
       }
       aggregate.getCartItems().add(value);
+      aggregate.setCartID(value.getCartID());
       return aggregate;
     };
   }
@@ -111,7 +112,7 @@ public class StatefulTopoplogy {
                     .withKeySerde(Serdes.String())
                     .withValueSerde(CustomSerdes.getCartItemAggregatSerde(getSchemaProperties())));
     shoppingCartAggregate.toStream()
-            .peek((k,v)->LOG.info("Key: " + k + ", Value: " + v ));
+            .to(shopCartOut, Produced.with(Serdes.String(), CustomSerdes.getCartItemAggregatSerde(getSchemaProperties())));
     return shoppingCartAggregate;
   }
 

@@ -20,6 +20,7 @@ spring:
 kafka-topics:
   clicks-in: shop.clicks.raw
   clicks-out: shop.clicks.avro
+  clicks-filtered-out: shop.clicks.filtered
 server.port: -1
 logging:
   level:
