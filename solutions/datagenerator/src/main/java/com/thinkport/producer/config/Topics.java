@@ -14,6 +14,9 @@ public class Topics {
         TopicBuilder.name("shop.carts").replicas(1).partitions(3).build(),
         TopicBuilder.name("shop.clicks.raw").replicas(1).partitions(3).build(),
             TopicBuilder.name("shop.clicks.avro").replicas(1).partitions(3).build(),
-            TopicBuilder.name("shop.orders.placed").replicas(1).partitions(3).build());
+            TopicBuilder.name("shop.orders.placed").replicas(1).partitions(3).build(),
+            TopicBuilder.name("shop.carts").replicas(1).partitions(3).build(),
+            TopicBuilder.name("shop.carts.aggregate").replicas(1).partitions(3).build());
+
   }
 }

@@ -1,7 +1,6 @@
 package com.thinkport.producer.generators;
 
 import com.thinkport.producer.model.ClickJson;
-import java.util.concurrent.TimeUnit;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.datafaker.Faker;
@@ -9,6 +8,8 @@ import net.datafaker.providers.base.Commerce;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
 
 @Service
 @AllArgsConstructor

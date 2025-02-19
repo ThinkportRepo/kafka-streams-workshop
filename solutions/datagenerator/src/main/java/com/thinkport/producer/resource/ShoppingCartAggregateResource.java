@@ -85,9 +85,9 @@ public class ShoppingCartAggregateResource {
       int cartID = faker.number().numberBetween(0, 19);
       ShoppingCartAggregateCreation shoppingCartAggregate = shoppingCartsAggregateMap.get(cartID);
       List<CartItem> shoppingCarts = shoppingCartAggregate.getCartItem();
-      if (shoppingCarts.size() > 0) {
-        int shopingCartId = faker.number().numberBetween(0, shoppingCarts.size() - 1);
-        CartItem deleteCart = shoppingCarts.get(shopingCartId);
+      if (!shoppingCarts.isEmpty()) {
+        int shoppingCartId = faker.number().numberBetween(0, shoppingCarts.size() - 1);
+        CartItem deleteCart = shoppingCarts.get(shoppingCartId);
         deleteCart.setChangeType(CartChangeType.REMOVED);
         shoppingCarts.set(shoppingCarts.size() - 1, deleteCart);
         kafkaTemplateShoppingCart.send(

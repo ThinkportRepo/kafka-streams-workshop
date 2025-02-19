@@ -19,6 +19,8 @@ import java.util.Properties;
 @Component
 @Slf4j
 public class StatelessTopoplogy {
+    private final int ADMIN_CLICK_ID = 9000;
+    private final int LAST_VALID_HTTP_RESPONSE = 201;
     @Value("${spring.kafka.properties.schema.registry.url}")
     private String schemaRegistryUrl;
 
@@ -47,6 +49,31 @@ public class StatelessTopoplogy {
                             .build();
                 }).to(clicksTopicOut, Produced.with(Serdes.String(), CustomSerdes.getClickSerde(getSchemaProperties())));
          return stream;
+    }
+
+    @Bean
+    public KStream<String, ClickJson> storeStreamWithoutError(StreamsBuilder kStreamBuilder) {
+        KStream<String,ClickJson> stream = kStreamBuilder.stream(clicksTopicIn, Consumed.with(Serdes.String(), new JsonSerde<>(ClickJson.class)));
+        stream.peek((k,v)->LOG.info("Key: " + k + ", Value: " + v ))
+                .mapValues(clickJson-> {
+                    return ClickAvro.newBuilder()
+                            .setClickId(clickJson.getClickId())
+                            .setBytes(clickJson.getBytes())
+                            .setIp(clickJson.getIp())
+                            .setKnownIp(clickJson.isKnownIp())
+                            .setUserId(clickJson.getUserId())
+                            .setProductId(clickJson.getProductId())
+                            .setReferrer(clickJson.getReferrer())
+                            .setStatus(clickJson.getStatus())
+                            .setRequest(clickJson.getRequest())
+                            .setUserAgent(clickJson.getUserAgent())
+                            .build();
+                })
+                .filter((k, v) -> Integer.valueOf(v.getUserId()) != ADMIN_CLICK_ID)
+                .peek((k, v) -> LOG.info("Key: " + k + ", Value: " + v.toString()))
+                .filter((k, v) -> Integer.valueOf(v.getRequest()) > LAST_VALID_HTTP_RESPONSE )
+                .peek((k, v) -> LOG.info("Key: " + k + ", Value: " + v.toString()));
+        return stream;
     }
 
     private Properties getSchemaProperties(){

@@ -72,6 +72,11 @@ services:
     restart: always
     environment:
       spring.profiles.active: local
+  05-stateful-streams-aggregate:
+    build: ../05-stateful-streams-aggregate
+    restart: always
+    environment:
+      spring.profiles.active: local
   datagenerator:
     build: ../datagenerator
     restart: always
