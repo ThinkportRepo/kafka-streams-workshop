@@ -21,6 +21,7 @@ import java.util.Properties;
 public class StatelessTopoplogy {
     private final int ADMIN_CLICK_ID = 9000;
     private final int LAST_VALID_HTTP_RESPONSE = 201;
+
     @Value("${spring.kafka.properties.schema.registry.url}")
     private String schemaRegistryUrl;
 

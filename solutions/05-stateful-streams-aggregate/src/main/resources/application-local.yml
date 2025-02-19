@@ -1,10 +1,10 @@
 spring:
   application.name: 05stateful
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka:29092
     client-id: ${spring.application.name}
     properties:
-      schema.registry.url: "http://localhost:8081"
+      schema.registry.url: "http://schema-registry:8081"
     admin:
       auto-create: false
     consumer:
@@ -13,8 +13,6 @@ spring:
     streams:
       properties:
         session.timeout.ms: 10000
-        default.key.serde: "org.apache.kafka.common.serialization.Serdes$StringSerde"
-        default.value.serde: "io.confluent.kafka.serializers.KafkaAvroSerializer"
 kafka-topics:
   shop-cart-in: shop.carts
   articles-in: shop.articles
