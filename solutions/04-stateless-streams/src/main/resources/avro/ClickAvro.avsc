@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "ClickAvro",
+  "namespace": "digital.thinkport.avro",
+  "fields": [
+    { "name": "clickId", "type": "string" },
+    { "name": "userId", "type": "string" },
+    { "name": "ip", "type": "string" },
+    { "name": "knownIp", "type": "boolean" },
+    { "name": "request", "type": "string" },
+    { "name": "status", "type": "int" },
+    { "name": "bytes", "type": "int" },
+    { "name": "productId", "type": ["null", "string"], "default": null },
+    { "name": "referrer", "type": ["null", "string"], "default": null },
+    { "name": "userAgent", "type": ["null", "string"], "default": null }
+  ]
+}

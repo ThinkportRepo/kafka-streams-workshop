@@ -1,0 +1,5 @@
+spring:
+  application.name: producer
+  kafka:
+    bootstrap-servers: kafka:29092
+    client-id: ${spring.application.name}

@@ -1,0 +1,16 @@
+spring:
+  application.name: 02consumer
+  kafka:
+    bootstrap-servers: localhost:9092
+    client-id: ${spring.application.name}
+    consumer:
+      group-id: ${spring.application.name}
+      auto-offset-reset: earliest
+      key-deserializer: "org.apache.kafka.common.serialization.StringDeserializer"
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        session.timeout.ms: 10000
+        spring.json.value.default.type: "com.thinkport.producer.model.ClickJson"
+        spring.json.trusted.packages: "*"
+kafka-topics:
+  clicks-in: shop.clicks.raw
