@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.support.serializer.JsonSerde;
@@ -35,8 +36,8 @@ public class StatelessTopoplogy {
   @Value("${kafka-topics.clicks-erroneous-out}")
   private String clicksErroneousTopicOut;
 
-  @Bean
-  public KStream<String, ClickJson> statelessStream(StreamsBuilder kStreamBuilder) {
+  @Autowired
+  public void statelessStream(StreamsBuilder kStreamBuilder) {
     KStream<String, ClickJson> stream =
         kStreamBuilder.stream(
             clicksTopicIn, Consumed.with(Serdes.String(), new JsonSerde<>(ClickJson.class)));
@@ -63,7 +64,6 @@ public class StatelessTopoplogy {
                             .defaultBranch(Branched.as("Filtered"));
             branches.get("Branch-Erroneous").to(clicksErroneousTopicOut,Produced.with(Serdes.String(), CustomSerdes.getClickSerde(getSchemaProperties())));
             branches.get("Branch-Filtered").to(clicksErroneousTopicOut,Produced.with(Serdes.String(), CustomSerdes.getClickSerde(getSchemaProperties())));
-    return stream;
   }
 
   private Properties getSchemaProperties() {

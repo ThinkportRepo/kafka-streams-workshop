@@ -43,15 +43,4 @@ public class Config {
             System.out.println("State transition from " + oldState + " to " + newState);
         });
     }
-    @Bean
-    public KafkaStreamsInteractiveQueryService kafkaStreamsInteractiveQueryService(StreamsBuilderFactoryBean streamsBuilderFactoryBean) {
-        final KafkaStreamsInteractiveQueryService kafkaStreamsInteractiveQueryService =
-                new KafkaStreamsInteractiveQueryService(streamsBuilderFactoryBean);
-        RetryTemplate retryTemplate = new RetryTemplate();
-        retryTemplate.setBackOffPolicy(new FixedBackOffPolicy());
-        RetryPolicy retryPolicy = new SimpleRetryPolicy(10);
-        retryTemplate.setRetryPolicy(retryPolicy);
-        kafkaStreamsInteractiveQueryService.setRetryTemplate(retryTemplate);
-        return kafkaStreamsInteractiveQueryService;
-    }
 }
