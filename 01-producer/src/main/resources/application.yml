@@ -1,5 +1,5 @@
 spring:
   application.name: producer
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: {kafka cluster}
     client-id: ${spring.application.name}
