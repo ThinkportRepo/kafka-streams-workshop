@@ -62,6 +62,16 @@ services:
     restart: always
     environment:
       spring.profiles.active: local
+  03-avro:
+    build: ../03-avro
+    restart: always
+    environment:
+      spring.profiles.active: local
+  04-stateless-streams:
+    build: ../04-stateless-streams
+    restart: always
+    environment:
+      spring.profiles.active: local
   datagenerator:
     build: ../datagenerator
     restart: always

@@ -52,18 +52,8 @@ services:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
       KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8081
-  01-producer:
-    build: ../01-producer
-    restart: always
-    environment:
-      spring.profiles.active: local
-  02-consumer:
-    build: ../02-consumer
-    restart: always
-    environment:
-      spring.profiles.active: local
-  datagenerator:
-    build: ../datagenerator
-    restart: always
-    environment:
-      spring.profiles.active: local
+#  datagenerator:
+#    build: ../datagenerator
+#    restart: always
+#    environment:
+#      spring.profiles.active: local

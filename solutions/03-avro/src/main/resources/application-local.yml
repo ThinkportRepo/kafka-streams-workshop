@@ -4,7 +4,7 @@ spring:
     bootstrap-servers: kafka:29092
     client-id: ${spring.application.name}
     properties:
-      schema.registry.url: "http://localhost:8081"
+      schema.registry.url: "http://schema-registry:8081"
       specific.avro.reader: true
     consumer:
       group-id: ${spring.application.name}

@@ -6,6 +6,8 @@
    mvn clean install -f ./datagenerator/pom.xml
    mvn clean install -f ./01-producer/pom.xml
    mvn clean install -f ./02-consumer/pom.xml
+   mvn clean install -f ./03-avro/pom.xml
+   mvn clean install -f ./04-stateless-streams/pom.xml
    ```
 2. **Start the services**:
    Use Docker Compose to start the application and its dependencies:

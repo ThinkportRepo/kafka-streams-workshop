@@ -1,7 +1,7 @@
 spring:
   application.name: 02consumer
   kafka:
-    bootstrap-servers: kafka:29092
+    bootstrap-servers: { cluster }
     client-id: ${spring.application.name}
     consumer:
       group-id: ${spring.application.name}
