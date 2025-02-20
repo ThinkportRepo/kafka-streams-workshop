@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "CartItem",
+  "namespace": "digital.thinkport.avro",
+  "fields": [
+    { "name": "cartID", "type": "string" },
+    { "name": "articleID", "type": "string" },
+    {
+      "name": "changeType",
+      "type": {
+        "type": "enum",
+        "name": "CartChangeType",
+        "symbols": ["ADDED", "REMOVED"]
+      }
+    }
+  ]
+}

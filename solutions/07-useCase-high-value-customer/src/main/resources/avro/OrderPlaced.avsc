@@ -1,0 +1,10 @@
+{
+  "type": "record",
+  "name": "OrderPlaced",
+  "namespace": "digital.thinkport.avro",
+  "fields": [
+    { "name": "orderID", "type": "string" },
+    { "name": "userID", "type": "string" },
+    { "name": "cartID", "type": "string" }
+  ]
+}
