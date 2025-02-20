@@ -19,10 +19,7 @@ import java.util.Properties;
 
 @Component
 @Slf4j
-public class StatelessTopoplogy {
-  private final int ADMIN_CLICK_ID = 9000;
-  private final int LAST_VALID_HTTP_RESPONSE = 201;
-
+public class StatefulTopology {
   @Value("${spring.kafka.properties.schema.registry.url}")
   private String schemaRegistryUrl;
 
@@ -35,11 +32,21 @@ public class StatelessTopoplogy {
   @Value("${kafka-topics.users-in}")
   private String users;
 
+  @Value("${kafka-topics.users-out}")
+  private String userClicksFraudsTopic;
+
+
   @Bean
   public KStream<String, ClickAvro> clickStream(StreamsBuilder kStreamBuilder) {
     return kStreamBuilder.stream(
         clicksTopicIn,
         Consumed.with(Serdes.String(), CustomSerdes.getClickSerde(getSchemaProperties())));
+  }
+
+  @Bean
+  GlobalKTable<String, User> userGlobalTable(StreamsBuilder kStreamBuilder) {
+    return kStreamBuilder.globalTable(
+            users, Consumed.with(Serdes.String(), CustomSerdes.getUserSerde(getSchemaProperties())));
   }
 
   @Bean
@@ -49,7 +56,7 @@ public class StatelessTopoplogy {
         .groupByKey()
         .windowedBy(SessionWindows.ofInactivityGapWithNoGrace(Duration.ofSeconds(30)))
         .count()
-        .filter((userID, count) -> count >= 50);
+        .filter((userID, count) -> count >= 100);
   }
 
   @Bean
@@ -61,19 +68,15 @@ public class StatelessTopoplogy {
                 new KeyValue<>(
                     k.key(),
                     UserClicks.newBuilder().setUserID(k.key()).setClickCount(v).build()));
-        //.peek((k, v) -> System.out.println("K: " + k + " v: " + v.toString()));
+     //.peek((k, v) -> System.out.println("K: " + k + " v: " + v.toString()));
 
   }
 
-  @Bean
-  GlobalKTable<String, User> userGlobalTable(StreamsBuilder kStreamBuilder) {
-    return kStreamBuilder.globalTable(
-        users, Consumed.with(Serdes.String(), CustomSerdes.getUserSerde(getSchemaProperties())));
-  }
+
 
   @Bean
   KStream<String, UserFraud> joinedStream (KStream<String, UserClicks> userClicksKStream,GlobalKTable<String, User> userGlobalTable ){
-    return userClicksKStream.join(
+    KStream<String, UserFraud> joinedStream = userClicksKStream.join(
                   userGlobalTable,
                   (userID, userClicks) -> userID,
                   (userClicks, user) -> UserFraud.newBuilder()
@@ -85,6 +88,8 @@ public class StatelessTopoplogy {
                           .setClickCount(userClicks.getClickCount())
                           .build()
           );
+    joinedStream.to(userClicksFraudsTopic,Produced.with(Serdes.String(),CustomSerdes.getUserFraud(getSchemaProperties())));
+    return joinedStream;
             //.peek((k, v) -> System.out.println("K: " + k + " v: " + v.toString()));
 
 }

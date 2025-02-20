@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "name": "Article",
+  "namespace": "digital.thinkport.avro",
+  "fields": [
+    { "name": "articleID", "type": "string" },
+    { "name": "name", "type": "string" },
+    { "name": "category", "type": "string" },
+    { "name": "price", "type": "double" },
+    { "name": "description", "type": ["null", "string"], "default": null }
+  ]
+}

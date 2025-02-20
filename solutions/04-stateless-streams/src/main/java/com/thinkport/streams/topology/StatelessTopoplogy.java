@@ -79,6 +79,8 @@ public class StatelessTopoplogy {
     return stream;
   }
 
+
+
   private Properties getSchemaProperties() {
     Properties properties = new Properties();
     properties.put("schema.registry.url", schemaRegistryUrl);
