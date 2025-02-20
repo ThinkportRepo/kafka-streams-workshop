@@ -1,0 +1,9 @@
+{
+  "type": "record",
+  "name": "UserClicks",
+  "namespace": "digital.thinkport.avro",
+  "fields": [
+    { "name": "userID", "type": "string" },
+    { "name": "clickCount", "type": "double" }
+  ]
+}

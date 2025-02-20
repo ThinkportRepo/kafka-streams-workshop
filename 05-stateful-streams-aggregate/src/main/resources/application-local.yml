@@ -1,0 +1,38 @@
+spring:
+  application.name: 05stateful
+  kafka:
+    bootstrap-servers: kafka:29092
+    client-id: ${spring.application.name}
+    properties:
+      schema.registry.url: "http://schema-registry:8081"
+    admin:
+      auto-create: false
+    consumer:
+      properties:
+        session.timeout.ms: 10000
+    streams:
+      properties:
+        session.timeout.ms: 10000
+kafka-topics:
+  shop-cart-in: shop.carts
+  articles-in: shop.articles
+  shop-cart-out: shop.carts.aggregate
+server.port: -1
+logging:
+  level:
+    root: INFO
+management:
+  server.port: 8077
+  endpoint:
+    health.enabled: true
+    prometheus.enabled: true
+  health:
+    key:
+      enabled: livenessstate,readinessstate
+    defaults:
+      enabled: false
+    probes:
+      enabled: true
+  endpoints:
+    enabled-by-default: false
+    web.exposure.include: '*'

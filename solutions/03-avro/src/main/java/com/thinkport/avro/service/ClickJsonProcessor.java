@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,7 @@ public class ClickJsonProcessor {
             .setRequest(clickJson.getRequest())
             .setUserAgent(clickJson.getUserAgent())
             .build();
-    ProducerRecord producerRecord = new ProducerRecord<>("shop.clicks.avro",message.key(),clickAvro);
+    ProducerRecord<String, ClickAvro> producerRecord = new ProducerRecord<>("shop.clicks.avro",message.key(),clickAvro);
     template.send(producerRecord);
 
   }
