@@ -38,32 +38,6 @@ public class StatelessTopoplogy {
 
   @Autowired
   public void statelessStream(StreamsBuilder kStreamBuilder) {
-    KStream<String, ClickJson> stream =
-        kStreamBuilder.stream(
-            clicksTopicIn, Consumed.with(Serdes.String(), new JsonSerde<>(ClickJson.class)));
-    KStream<String,ClickAvro> transformedStream =  stream.peek((k,v)->LOG.info("Key: " + k + ", Value: " + v ))
-            .mapValues(
-            clickJson -> {
-              return ClickAvro.newBuilder()
-                  .setClickId(clickJson.getClickId())
-                  .setBytes(clickJson.getBytes())
-                  .setIp(clickJson.getIp())
-                  .setKnownIp(clickJson.isKnownIp())
-                  .setUserId(clickJson.getUserId())
-                  .setProductId(clickJson.getProductId())
-                  .setReferrer(clickJson.getReferrer())
-                  .setStatus(clickJson.getStatus())
-                  .setRequest(clickJson.getRequest())
-                  .setUserAgent(clickJson.getUserAgent())
-                  .build();
-            });
-            Map<String, KStream<String, ClickAvro>> branches =
-                    transformedStream.split(Named.as("Branch-"))
-                            .branch((key, value) -> value.getUserId().equals(ADMIN_USER_ID),  /* first predicate  */
-                                    Branched.as("Erroneous"))
-                            .defaultBranch(Branched.as("Filtered"));
-            branches.get("Branch-Erroneous").to(clicksErroneousTopicOut,Produced.with(Serdes.String(), CustomSerdes.getClickSerde(getSchemaProperties())));
-            branches.get("Branch-Filtered").to(clicksErroneousTopicOut,Produced.with(Serdes.String(), CustomSerdes.getClickSerde(getSchemaProperties())));
   }
 
   private Properties getSchemaProperties() {

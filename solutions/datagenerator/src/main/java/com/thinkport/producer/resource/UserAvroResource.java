@@ -69,6 +69,23 @@ public class UserAvroResource {
       System.out.println("Gesendet: " + user);
       users.put(i, user);
     }
+    String name = "Evil Morty";
+    Address address =
+            Address.newBuilder()
+                    .setStreet(faker.lordOfTheRings().location())
+                    .setHouseNr("69")
+                    .setZipCode("420")
+                    .build();
+
+    User user =
+            User.newBuilder()
+                    .setID("666")
+                    .setName(name)
+                    .setMail(name+"@thinkport.digital")
+                    .setAddress(address)
+                    .setPhone("32168")
+                    .build();
+    kafkaTemplate.send(new ProducerRecord<>(TOPIC, user.getID(), user));
     initialized.set(true);
   }
 }

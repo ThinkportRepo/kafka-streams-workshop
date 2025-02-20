@@ -8,15 +8,12 @@ import lombok.AllArgsConstructor;
 import net.datafaker.Faker;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class UserAvroResource {
-
-  /*
-  TODO compacted topic mit Kafka admin client anlegen.
-   */
 
   private static final String TOPIC = "shop.users";
   private final KafkaTemplate<String, User> kafkaTemplate;
@@ -24,7 +21,7 @@ public class UserAvroResource {
   private final AtomicBoolean initialized = new AtomicBoolean(false);
   private final ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>();
 
-  // @Scheduled(fixedRate = 1000)
+  @Scheduled(fixedRate = 1000)
   public void send() {
 
     if (initialized.get()) {
@@ -72,6 +69,23 @@ public class UserAvroResource {
       System.out.println("Gesendet: " + user);
       users.put(i, user);
     }
+    String name = "Evil Morty";
+    Address address =
+            Address.newBuilder()
+                    .setStreet(faker.lordOfTheRings().location())
+                    .setHouseNr("69")
+                    .setZipCode("420")
+                    .build();
+
+    User user =
+            User.newBuilder()
+                    .setID("666")
+                    .setName(name)
+                    .setMail(name+"@thinkport.digital")
+                    .setAddress(address)
+                    .setPhone("32168")
+                    .build();
+    kafkaTemplate.send(new ProducerRecord<>(TOPIC, user.getID(), user));
     initialized.set(true);
   }
 }

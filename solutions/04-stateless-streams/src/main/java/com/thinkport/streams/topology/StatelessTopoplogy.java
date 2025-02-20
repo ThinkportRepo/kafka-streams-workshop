@@ -62,7 +62,7 @@ public class StatelessTopoplogy {
                                     Branched.as("Erroneous"))
                             .defaultBranch(Branched.as("Filtered"));
             branches.get("Branch-Erroneous").to(clicksErroneousTopicOut,Produced.with(Serdes.String(), CustomSerdes.getClickSerde(getSchemaProperties())));
-            branches.get("Branch-Filtered").to(clicksErroneousTopicOut,Produced.with(Serdes.String(), CustomSerdes.getClickSerde(getSchemaProperties())));
+            branches.get("Branch-Filtered").to(clicksFilteredTopicOut,Produced.with(Serdes.String(), CustomSerdes.getClickSerde(getSchemaProperties())));
     return stream;
   }
 
