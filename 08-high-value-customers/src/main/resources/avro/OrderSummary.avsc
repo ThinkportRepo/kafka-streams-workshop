@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "OrderSummary",
+  "namespace": "digital.thinkport.avro",
+  "fields": [
+    { "name": "orderID", "type": "string" },
+    { "name": "userID", "type": "string" },
+    { "name": "cartID", "type": "string" },
+    { "name": "totalValue", "type": "double" }
+  ]
+}
