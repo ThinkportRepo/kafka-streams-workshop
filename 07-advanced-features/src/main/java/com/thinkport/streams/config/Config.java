@@ -44,10 +44,12 @@ public class Config {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ByteArraySerializer.class);
         props.put(StreamsConfig.DEFAULT_DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG, com.thinkport.streams.exceptionHandler.SendToDeadLetterQueueExceptionHandler.class);
         props.put("dead.letter.queue.topic", "shop.dlt");
+        props.put("application.server","localhost:8099");
         return new KafkaStreamsConfiguration(props);
     }
     @Bean
     public StreamsBuilderFactoryBeanConfigurer configurer() {
+
         return fb -> fb.setStateListener((newState, oldState) -> {
             System.out.println("State transition from " + oldState + " to " + newState);
         });

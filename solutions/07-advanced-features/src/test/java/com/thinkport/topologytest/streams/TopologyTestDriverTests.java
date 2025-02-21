@@ -1,8 +1,7 @@
 package com.thinkport.topologytest.streams;
 
 import com.thinkport.producer.model.ClickJson;
-import com.thinkport.streams.config.CustomSerdes;
-import com.thinkport.streams.topology.UserTopology;
+import com.thinkport.streams.AdvancedFeaturesApp;
 import com.thinkport.streams.topology.StatelessTopology;
 import digital.thinkport.avro.ClickAvro;
 import digital.thinkport.avro.User;
@@ -21,7 +20,7 @@ import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest(classes = {com.thinkport.streams.StatelessStreamsApplication.class})
+@SpringBootTest(classes = {AdvancedFeaturesApp.class})
 public class TopologyTestDriverTests {
   private static final String SCHEMA_REGISTRY_SCOPE = TopologyTestDriverTests.class.getName();
   private static final String MOCK_SCHEMA_REGISTRY_URL = "mock://" + SCHEMA_REGISTRY_SCOPE;

@@ -1,5 +1,5 @@
 spring:
-  application.name: 04stateless
+  application.name: 07advanced
   kafka:
     bootstrap-servers: localhost:9092
     client-id: ${spring.application.name}

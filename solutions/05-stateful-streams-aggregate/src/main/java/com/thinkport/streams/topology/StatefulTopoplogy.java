@@ -7,6 +7,7 @@ import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.*;
+import org.apache.kafka.streams.processor.StateStore;
 import org.apache.kafka.streams.state.KeyValueStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -108,7 +109,8 @@ public class StatefulTopoplogy {
                         shopCartOut)
                     .withKeySerde(Serdes.String())
                     .withValueSerde(CustomSerdes.getCartItemAggregatSerde(getSchemaProperties())));
-    shoppingCartAggregate.toStream()
+    shoppingCartAggregate
+            .toStream()
             .to(shopCartOut, Produced.with(Serdes.String(), CustomSerdes.getCartItemAggregatSerde(getSchemaProperties())));
     return shoppingCartAggregate;
   }

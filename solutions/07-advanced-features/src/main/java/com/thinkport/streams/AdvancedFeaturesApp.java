@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableRetry
 @EnableScheduling
-public class StatelessStreamsApplication {
+public class AdvancedFeaturesApp {
     public static void main(String[] args) {
-        SpringApplication.run(StatelessStreamsApplication.class, args);
+        SpringApplication.run(AdvancedFeaturesApp.class, args);
     }
 }
